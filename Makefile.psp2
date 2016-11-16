@@ -30,7 +30,9 @@ clean:
 install: $(TARGET_LIB)
 	@cp  $(TARGET_LIB) $(VITASDK)/arm-vita-eabi/lib
 	@mkdir -p "$(VITASDK)/arm-vita-eabi/include/guichan/widgets"
+	@mkdir -p "$(VITASDK)/arm-vita-eabi/include/guichan/sdl"
 	@cp include/guichan.hpp "$(VITASDK)/arm-vita-eabi/include"
 	@cp include/guichan/*.hpp "$(VITASDK)/arm-vita-eabi/include/guichan"
 	@cp include/guichan/widgets/*.hpp "$(VITASDK)/arm-vita-eabi/include/guichan/widgets"
+	@cp include/guichan/sdl/*.hpp "$(VITASDK)/arm-vita-eabi/include/guichan/sdl"
 	@echo "Installed!"
