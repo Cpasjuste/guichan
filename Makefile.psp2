@@ -1,0 +1,36 @@
+# guichan port by Cpasjuste
+
+TARGET_LIB = libguichan.a
+OBJS = src/imagefont.o src/actionevent.o src/keyevent.o src/cliprectangle.o \
+	src/event.o src/graphics.o src/mouseinput.o src/mouseevent.o src/exception.o \
+	src/key.o src/focushandler.o src/widget.o src/defaultfont.o src/rectangle.o \
+	src/inputevent.o src/color.o src/image.o src/basiccontainer.o \
+	src/guichan.o src/font.o src/keyinput.o src/gui.o \
+	src/widgets/checkbox.o src/widgets/button.o src/widgets/textfield.o \
+	src/widgets/icon.o src/widgets/listbox.o src/widgets/label.o \
+	src/widgets/scrollarea.o src/widgets/slider.o src/widgets/container.o \
+	src/widgets/textbox.o src/widgets/radiobutton.o src/widgets/dropdown.o src/widgets/window.o \
+	src/sdl/sdl.o src/sdl/sdlgraphics.o src/sdl/sdlimage.o src/sdl/sdlimageloader.o src/sdl/sdlinput.o
+
+PREFIX	= arm-vita-eabi
+CXX		= $(PREFIX)-g++
+AR      = $(PREFIX)-ar
+
+CXXFLAGS  = -Wl,-q -Wall -Wno-unused -O2 \
+	-I$(VITASDK)/arm-vita-eabi/include/SDL -Iinclude
+
+CXXFLAGS += -D__PSP2__ -DGUICHAN_BUILD -DHAVE_SDL_SDL_H -DHAVE_SDL_SDL_IMAGE_H
+
+$(TARGET_LIB): $(OBJS)
+	$(AR) rcs $@ $^
+
+clean:
+	@rm -rf $(TARGET_LIB) $(OBJS)
+
+install: $(TARGET_LIB)
+	@cp  $(TARGET_LIB) $(VITASDK)/arm-vita-eabi/lib
+	@mkdir -p "$(VITASDK)/arm-vita-eabi/include/guichan/widgets"
+	@cp include/guichan.hpp "$(VITASDK)/arm-vita-eabi/include"
+	@cp include/guichan/*.hpp "$(VITASDK)/arm-vita-eabi/include/guichan"
+	@cp include/guichan/widgets/*.hpp "$(VITASDK)/arm-vita-eabi/include/guichan/widgets"
+	@echo "Installed!"
